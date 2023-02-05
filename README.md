@@ -1,6 +1,6 @@
-# Epitech
+# Epitech :heavy_check_mark:
 
-  This repository contains all the Epitech projects I've done.
+  This repository contains all the Epitech projects I've done.  
   ° TEK01 (C pool, Project, Stumper/Exam)
 
   
