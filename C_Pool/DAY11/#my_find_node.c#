@@ -1,0 +1,22 @@
+/*
+** EPITECH PROJECT, 2022
+** my_find_nodes
+** File description:
+** list
+*/
+
+#include <stddef.h>
+#include "mylist.h"
+#include "my.h"
+
+linked_list_t *my_find_node(linked_list_t const *begin,
+                            void const *data_ref, int (*cmp)())
+{
+    linked_list_t *discover = begin;
+    while (discover != NULL) {
+        if ((*cmp)(discover->data, data_ref) == 0) {
+            return discover;
+        }
+        discover = discover->next;
+    }
+}

@@ -1,0 +1,4 @@
+./my_sort_int_array.c:24: MAJOR:C-F6
+./my_sort_int_array.c:28: INFO:C-A3
+./my_strcapitalize.c:21: MINOR:C-G7
+./my_strcapitalize.c:21: MINOR:C-L4

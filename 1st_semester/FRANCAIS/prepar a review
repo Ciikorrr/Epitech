@@ -1,0 +1,29 @@
+• Nom du projet :BSQ
+
+• Domaine (secteur) : Algorithmie
+• Objet du projet : Il s'agit de trouver le plus grand carré dans un espace délimité contenant des obstacles 
+• Objectifs du projet :
+• Délais impartis / durée du projet : 3 semaines soit du 04/11/22 au 24/11/22
+• Date du bilan : 15/11/22
+• Votre rôle dans ce projet : Producteur du projet
+• Caractéristiques du projet : 
+	- Trouver la fonction qui verifie qu'un carré est possible.
+	- La manipulation de tableau de tableau.
+	- Une complexité abordable.
+	- Le niveau de performance requis est poussé.
+
+• Technologie mise en œuvre : Le language C en general, plus précisement les tableaux de tableaux, l'ouverture de fichier (file descriptor, open, read)
+• Volume total de l’application : 2000 lignes, plusieurs fonctions à programmer (square_size, nb_char, width, height, ...), toutes les fonctions etaient à coordonnées.
+Le projet est fonctionel, à 97.5%, certains points aurait pu etre amélioreé, notament sur la nomenclature des fichier ainsi que des fonctions, l'organisation des fichiers, les tests unitaires et non fonctionels. Le code a une très bonne efficacité. J'aurai pu aller plus loin en utilisant un algorithme par zone de chaleur ou encore le faire sur une ligne afin que l'affichage soit plus rapide.
+
+Nomenclature des fichiers : J'y ai pensé mais par manque de temps je n'est pas pu corriger ces points. Je manquais de temps car j'ai eu du mal à démarrer le projet. Je ne voyais pas comment commencer ainsi qu'une fonction qui ne marchait pas bien qui donc m'a handicapé pour la suite.
+
+Description du Projet :
+Explication de l'algo :
+Les problematiques :
+La reflexion :
+les succes, difficultés :
+Creation de l'algo :
+Ce que j'en est tiré :
+Les bonus :
+Les resultats :
