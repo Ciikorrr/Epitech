@@ -1,7 +1,8 @@
 # Epitech :heavy_check_mark:
 
   This repository contains all the Epitech projects I've done.  
-  ° TEK01 (C pool, Project, Stumper/Exam)
+  
+    ° TEK01 (C pool, Project, Stumper/Exam)
 
   
   Warning : cheating is prohibited at Epitech, you can have -42 for plagiarism and -84 for theft.
