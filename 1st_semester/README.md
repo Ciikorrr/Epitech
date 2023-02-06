@@ -22,4 +22,4 @@ English Module :
   - grade C :heavy_check_mark:  
   
 # GPA : 3.19
-  with 26 credits
+  - With 26/60 credits :coin:
