@@ -8,14 +8,24 @@
 SOURCE_DIR = src/
 
 SRC	=	main.c\
-		list.c\
-		../lib/my/my_getnbr.c
+		functions_list/free_list.c\
+		functions_list/list.c\
+		functions_list/utils_list.c\
+		../lib/my/my_getnbr.c\
+		operations/operations.c \
+		operations/operations_2.c \
+		operations/operations_3.c\
+		error_handling/check_error.c \
+		functions_list/functions_divers.c\
+		functions_list/function_lists.c
 
 OBJ	=	$(addprefix $(SOURCE_DIR), $(SRC:.c=.o))
 
-NAME	=	main
+NAME	=	push_swap
 
-CPPFLAGS = -I ./include
+CPPFLAGS = -I ./include -g
+
+CFLAGS = -W
 
 LDFLAGS = -L lib/my/ -lmy -L lib/my_printf/ -lmy
 
@@ -39,6 +49,8 @@ fclean:	clean
 	make fclean -C lib/my
 	make fclean -C lib/my_printf/
 
+debug: CFLAGS += -ggdb3
+debug: $(NAME)
 
 re: fclean all
 

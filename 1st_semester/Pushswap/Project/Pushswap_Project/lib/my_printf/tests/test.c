@@ -141,8 +141,3 @@ Test(my_printf25, general_test4, .init = redirect_all_std) {
     my_printf("%%%i%%%d%%%s%%%f%%", 2, 1, "lol", 1.1);
     cr_assert_stdout_eq_str("%2%1%lol%1.100000%");
 }
-
-Test(my_printf25, general_test5, .init = redirect_all_std) {
-    my_printf("Notre projet %s passe %s %.1f%% c'est frauduleux.", "my_printf", "avec", 62.8);
-    cr_assert_stdout_eq_str("Notre projet my_printf passe avec 62.8% c'est frauduleux.");
-}

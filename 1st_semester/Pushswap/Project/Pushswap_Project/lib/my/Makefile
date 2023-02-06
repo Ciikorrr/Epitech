@@ -43,34 +43,22 @@ SRC	=	concat_params.c			\
 		my_strupcase.c			\
 		my_swap.c
 
-
-
 OBJ    =    $(SRC:.c=.o)
 
-
-
 NAME    =    libmy.a
-
-
 
 all:    $(NAME)
 
 $(NAME):	$(OBJ)
-	ar rc $(NAME) $(OBJ)
+	ar rcs $(NAME) $(OBJ)
 	mkdir -p ../../include
 	cp libmy.a ../
 	cp my.h ../../include
 
-
-
 clean:
 	rm -f $(OBJ)
 
-
-
 fclean:	clean
 	rm -f $(NAME)
-
-
 
 .PHONY: all clean fclean

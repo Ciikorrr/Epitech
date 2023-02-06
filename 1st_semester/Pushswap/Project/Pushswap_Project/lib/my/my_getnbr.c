@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int control(char *str)
+int control(char const *str)
 {
     int i = 0;
     int nb = 0;
@@ -50,7 +50,7 @@ int my_getnbr(char const *str)
         i += 1;
     }
     res = res * isneg;
-    if (res <= -214483647 || res >= 21448364)
+    if (res <= -2147483648 || res >= 2147483647)
         return 0;
     return res;
 }

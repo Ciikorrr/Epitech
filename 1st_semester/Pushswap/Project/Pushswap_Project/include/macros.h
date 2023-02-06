@@ -10,4 +10,5 @@
 
     #define ERROR_EPITECH 84
     #define SUCCESS_EPITECH 0
+    #define CS length_list(lists->la) == 2
 #endif /* !MACROS_H_ */
