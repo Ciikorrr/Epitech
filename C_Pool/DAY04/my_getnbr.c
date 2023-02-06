@@ -8,39 +8,51 @@
 #include <unistd.h>
 #include <stdio.h>
 
-void my_putchar(char c);
-
-int control(int i, char const *str, int is_neg)
+int control(char *str)
 {
-    if (str[i] == '-' && (str[i + 1] >= '0' && str[i + 1] <= '9')) {
-        is_neg = -1;
-    }
-    return is_neg;
-}
-
-int add(int i, char const *str)
-{
-    if (str[i] == '+' || str[i] == '-' || (str[i] >= '0' && str[i] <= '9')) {
+    int i = 0;
+    int nb = 0;
+    while (str[i] != '\0') {
+        if (str[i] == '-' ) {
+            nb += 1;
+        }
         i += 1;
     }
-    return i;
+    if (nb % 2 != 0) {
+        nb = nb * -1;
+        return -1;
+    }
+    return 1;
+}
+
+int my_isdigit(char c)
+{
+    if (c >= '0' && c <= '9') {
+        return 1;
+    }
+    return 0;
 }
 
 int my_getnbr(char const *str)
 {
     int res = 0;
-    int is_neg = 1;
+    int isneg = control(str);
     int i = 0;
+    if (str == NULL)
+        return NULL;
     while (str[i] != '\0') {
-        is_neg = control(i, str, is_neg);
-        if (str[i] >= '0' && str[i] <= '9') {
-            res = res * 10;
+        if (my_isdigit(str[i]) == 1 && my_isdigit(str[i + 1]) == 1) {
             res += (str[i] - 48);
+            res = res * 10;
+            }
+        if (my_isdigit(str[i]) == 1 && my_isdigit(str[i + 1]) == 0) {
+            res += (str[i] - 48);
+            break;
         }
-        if ((str[i] < '0' || str[i] > '9') && str[i] != '-' && str[i] != '+') {
-            return res * is_neg;
-        }
-        i = add(i, str);
+        i += 1;
     }
-    return res * is_neg;
+    res = res * isneg;
+    if (res <= -214483647 || res >= 21448364)
+        return 0;
+    return res;
 }

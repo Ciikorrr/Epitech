@@ -28,8 +28,3 @@ int my_put_nbr(int nb)
     }
     return (0);
 }
-
-int main(void)
-{
-    printf("%d", my_putstr(36));
-}
