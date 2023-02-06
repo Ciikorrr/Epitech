@@ -20,6 +20,7 @@ Test (my_putstr, test, .init = redirect_all_std)
     my_putstr("Hello World !");
     cr_assert_stdout_eq_str("Hello World !");
 }
+
 Test (my_strlen, test)
 {
     int result = my_strlen("Hello guys");

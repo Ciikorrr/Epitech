@@ -4,19 +4,18 @@
 ** File description:
 ** reverse str
 */
+#include <stdlib.h>
+int my_strlen(char const *str);
 
 char *my_revstr(char *str)
 {
-    int i = 0;
-    while (str[i] != '\0') {
-        i += 1;
+    char *reversed = malloc(sizeof(my_strlen(str)));
+    int i = (my_strlen(str) - 1);
+    int a = 0;
+    while (i != -1) {
+        reversed[a] = str[i];
+        a += 1;
+        i -= 1;
     }
-    int x = 0;
-    for (int e = (i - 1); e >= x; e -= 1) {
-        char mem = str[x];
-        str[x] = str[e];
-        str[e] = mem;
-        x += 1;
-    }
-    return (str);
+    return reversed;
 }
