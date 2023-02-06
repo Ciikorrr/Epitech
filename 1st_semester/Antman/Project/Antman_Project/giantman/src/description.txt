@@ -1,0 +1,8 @@
+Antman project
+
+Giantman is a decompression program.
+
+If you select :
+    - 1 : it's for files with song lyrics.
+    - 2 : it's for the html files.
+    - 3 : it's for the P3 PPM images files.
