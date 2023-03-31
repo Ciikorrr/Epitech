@@ -13,7 +13,7 @@ Module Mathematics :
   - grade A :heavy_check_mark:  
   
 Module Networks and Systems Administration :  
-  - grade : not yet receive
+  - grade : B :heavy_check_mark: 
   
 KYT/CAT - Network & Communication (Quizz) :  
   - grade D :heavy_check_mark: : :sob:  
