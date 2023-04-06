@@ -1,0 +1,22 @@
+#!/usr/bin/env python3
+from bombyx.parser import check_args
+from bombyx.display import with_rate
+from bombyx.calcul import with_borne
+import sys
+
+
+def main(argv):
+    if check_args(argv) != 0:
+        exit(84)
+    try:
+        if len(argv) == 3:
+            with_rate(int(argv[1]), float(argv[2]))
+        if len(argv) == 4:
+            with_borne(int(argv[1]), int(argv[2]), int(argv[3]))
+        exit(0)
+    except ZeroDivisionError:
+        exit(84)
+
+
+if __name__ == "__main__":
+    main(sys.argv)

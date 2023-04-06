@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+import argparse
+import sys
+from math import sqrt
+import numpy as np
+from trigo.calcul_functions import *
+from trigo.matrix_functions import *
+
+def get_args():
+    """Le Parser permet de gérer les arguments envoyés en entrée du programme. Dans ce cas là, 
+    il fallait avoir un type de function à utilisé parmit une liste predefinis ainsi que des chiffres qui correspondent aux chiffres dans les matrices"""
+    parser = argparse.ArgumentParser(
+        usage="%(prog)s\n\t./108trigo fun a0 a1 a2 ..."
+    )
+    parser.add_argument(
+        "fun",
+        type=str,
+        help="function to be applied, among at least EXP, COS, SIN, COSH and SINH",
+        choices=["EXP", "COS", "SIN", "COSH", "SINH"],
+    )
+    parser.add_argument(
+        "ai",
+        type=int,
+        help="coeficients of the matrix",
+        nargs="+",
+    )
+    try:
+        args = parser.parse_args(None, None)
+    except:
+        exit(84)
+    if (sqrt(len(sys.argv) - 2) % 1 != 0):
+        exit(84)
+    return args
+
+def main():
+    """Le main sert à appeller les fonctions en fonction des arguments recus dans get_args()"""
+    args = get_args()
+    matrix = create_matrix(args)
+    if (args.fun == "EXP"):
+        print_matrix(exponentiel(matrix))
+    if (args.fun == "COS"):
+        print_matrix(cos(matrix))
+    if (args.fun == "SIN"):
+        print_matrix(sin(matrix))
+    if (args.fun == "SINH"):
+        print_matrix(sinh(matrix))
+    if(args.fun == "COSH"):
+        print_matrix(cosh(matrix))
+    exit(0)
+
+if __name__ == "__main__":
+    main()

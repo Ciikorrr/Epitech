@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "protos.h": "c",
+        "linked_list.h": "c"
+    }
+}
