@@ -3,7 +3,7 @@
   This repository contains all the Epitech projects I've done.  
   
   - TEK01 (C pool, Projects, Stumpers/Exams)
-  - TEK01 (Paradigms Seminar, Projects)
+  - TEK02 (Paradigms Seminar, Projects)
 
   
   Warning : cheating is prohibited at Epitech, you can have -42 for plagiarism and -84 for theft.
