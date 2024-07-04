@@ -1,0 +1,7 @@
+.vscode
+myteams_cli
+myteams_server
+myteams
+libmyteams.so
+*gcda
+*gcno

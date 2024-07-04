@@ -1,0 +1,94 @@
+#!/usr/bin/env python3
+from parser_1 import get_args
+from math import exp, sqrt, pi
+
+
+class Gaussian:
+    """ Class to represent a Gaussian function.
+
+    Attributes
+    ----------
+    mu : float
+        mu of the gaussian function
+    sigma : float
+        sigma of the gaussian function
+
+    Methods
+    -------
+    call(x : float):
+        get the value of f(x)
+    """
+    def __init__(self, mu=0, sigma=1):
+        self.mu = float(mu)
+        self.sigma = float(sigma)
+        return
+
+    def __call__(self, x: float) -> float:
+        """Compute the value result of x with the gaussian
+        ### Parameters
+        1. x : float
+            - value to compute
+        ### Returns
+        - float
+            - f(x)
+        """
+        return exp(- ((x - self.mu) ** 2) / (2 * self.sigma **2)) / sqrt(2 * pi * self.sigma ** 2)
+
+def integral(f: callable, a: int, b: int, N: int) -> float:
+    """Compute the integral of f in an interval
+
+    ### Parameters
+    1. f : callable
+        - function to compute
+    2. a : int
+        - low side of the interval
+    3. b : int
+        - high side of the interval
+    4. N : int
+        - Number of step in the interval
+
+    ### Returns
+    - float
+        - integral of f from a to b
+    """
+    h = (b - a) / N
+    res = 0
+    iter = 0
+
+    for q in range(0, N):
+        iter = h * f(a + q * h + h / 2)
+        res += iter
+    return res
+
+def plot(g: Gaussian) -> None:
+    """Display the value needed by the plot
+
+    ### Parameters
+    1. g : Gaussian
+        - Gaussian function to plot
+    """
+    for i in range(201):
+        print(f"{i} {g(i):.5f}")
+    return
+
+def get_prob_inf(g: Gaussian, top: float) -> float:
+    print(f"{integral(g, 0, top, 1000) * 100:.1f}% of people have an IQ inferior to {top:.0f}")
+
+def get_prob_between(g: Gaussian, down: float, top: float) -> float:
+    print(f"{integral(g, down, top, 1000) * 100:.1f}% of people have an IQ between {down:.0f} and {top:.0f}")
+
+
+def main(args: list[float]) -> None:
+    g = Gaussian(args[0], args[1])
+    select = len(args)
+
+    if (select == 2):
+        return plot(g)
+    if (select == 3):
+        return get_prob_inf(g, args[2])
+    if (select == 4):
+        return get_prob_between(g, args[2], args[3])
+
+if __name__ == "__main__":
+    args = get_args()
+    main(args)

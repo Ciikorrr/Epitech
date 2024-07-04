@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+from the_ultimate_parser import get_args
+from math import exp, sqrt, pi
+
+def new_arithmetic(n, a, x):
+    res = (n * a + x) / (n + 1)
+    return res
+
+def new_rms(n, rms, x):
+    return sqrt((n * (rms**2) + x**2) / (n + 1))
+
+def new_std_derivation(rms, a):
+    return sqrt(rms**2 - a**2)
+
+def new_harmonic(n, h, x):
+    return (n + 1) / (n / h + 1 / x)
+
+def add_value(n, a, h, rms, sd, usr: int):
+    if (usr == 0):
+        h = 0
+    a = new_arithmetic(n, a, usr)
+    if (h != 0):
+        h = new_harmonic(n, h, usr)
+    rms = new_rms(n, rms, usr)
+    sd = new_std_derivation(rms, a)
+    n += 1
+    print(f"\tNumber of values:\t{n}")
+    print(f"\tStandard deviation:\t{sd:.2f}")
+    print(f"\tArithmetic mean:\t{a:.2f}")
+    print(f"\tRoot mean square:\t{rms:.2f}")
+    print(f"\tHarmonic mean:\t\t{h:.2f}")
+    print()
+
+
+    return n, a, h, rms, sd
+
+def main(n, a, h, sd) -> None:
+    rms = sqrt (sd ** 2 + a ** 2)
+    usr = ""
+    while (usr != "END"):
+        usr = input("Enter next value: ")
+        try :
+            n, a, h, rms, sd = add_value(n, a, h, rms, sd, int(usr))
+        except ValueError:
+            break
+
+if __name__ == "__main__":
+    args = get_args()
+    try :
+        main(args.n, args.a, args.h, args.sd)
+    except ZeroDivisionError:
+        exit(84)

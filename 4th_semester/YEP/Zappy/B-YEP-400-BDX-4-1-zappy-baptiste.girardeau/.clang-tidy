@@ -1,0 +1,9 @@
+---
+Checks: 'clang-analyzer-*,bugprone-*,modernize-*,performance-*,cppcoreguidelines-*,
+        -bugprone-easily-swappable-parameters,
+        -modernize-use-trailing-return-type,
+        -cppcoreguidelines-avoid-magic-numbers,
+        -cppcoreguidelines-pro-*'
+FormatStyle: file
+UseColor: true
+...

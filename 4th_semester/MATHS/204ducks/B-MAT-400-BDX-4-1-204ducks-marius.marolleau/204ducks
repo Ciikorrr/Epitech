@@ -1,0 +1,76 @@
+#!/usr/bin/env python3
+from math import exp, floor, sqrt
+from myparser import get_args
+
+def factorial(n: int) -> int:
+    """Compute the factorial of a number
+
+    ### Parameters
+    1. n : int
+        - number to compute
+
+    ### Returns
+    - int
+        - factorial of the number
+    """
+    return 1 if n <= 0 else n * factorial(n-1)
+
+def time_str(t: float) -> str:
+    t_sec = (t - int(t)) * 60
+    t_min = int(t)
+    if (t_sec >= 59.5):
+        t_sec = 0
+        t_min += 1
+    return f"{t_min}m {0 if t_sec < 10 else ''}{t_sec:.0f}s"
+
+def I(p, q): #simplification de l'integrale de la fonction f
+        return factorial(p) / pow(q, p + 1)
+
+def E(a):
+    return a + (4 - 3 * a) / 4 + (2 * a - 4) / 16
+    # return a * I(1, 1) + (4 - 3 * a) * I(1,2) + (2 * a - 4) * I(1,4)
+
+def F(a):
+    return a + (4 - 3 * a) / 2 + (2 * a - 4) / 4
+
+def V(a):
+    return 2 * a + (2 * (4 - 3 * a)) / 8 + (2 * (2 * a - 4)) / 64 - pow(E(a), 2)
+
+def ecart_type(a):
+    return sqrt(V(a))
+
+def p_retour(a, t):
+    return 1 - a * exp(-t) - (2 - 3 * a / 2) * exp(-2 * t) + (1 - a / 2) * exp(-4 * t)
+    # return a * (1 - exp(-t)) + ((4 - 3 * a) / 2) * (1 - exp(-2 * t)) + ((2 * a - 4) / 4) * (1 - exp(-4 * t))
+
+def time_back(a, stop):
+    x_left = 0
+    x_right = 6
+    x_middle = (x_right + x_left) / 2
+
+    while (x_right - x_left > 0.0001):
+        x_middle = (x_right + x_left) / 2
+        y_l = - stop + p_retour(a, x_left)
+        y_m = - stop + p_retour(a, x_middle)
+        y_r = - stop + p_retour(a, x_right)
+
+        if (y_m == 0):
+            return x_middle
+        if (y_l * y_m < 0):
+            x_right = x_middle
+        if (y_r * y_m < 0):
+            x_left = x_middle
+    return x_middle
+
+
+def main(v: float) -> None:
+    print("Average return time:", time_str(E(v)))
+    print(f"Standard deviation: {ecart_type(v):.3f}")
+    print("Time after which 50% of the ducks are back:", time_str(time_back(v, 0.5)))
+    print("Time after which 99% of the ducks are back:", time_str(time_back(v, 0.99)))
+    print(f"Percentage of ducks back after 1 minute: {p_retour(v, 1) * 100:.1f}%")
+    print(f"Percentage of ducks back after 2 minutes: {p_retour(v, 2)* 100:.1f}%")
+
+if __name__ == "__main__":
+    arg = get_args()
+    main(arg.a)

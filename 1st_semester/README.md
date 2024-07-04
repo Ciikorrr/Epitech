@@ -21,6 +21,6 @@ KYT/CAT - Network & Communication (Quizz) :
 English Module :  
   - grade C :heavy_check_mark:  
   
-# GPA : 3.09
+# GPA : 3.09 / 4
 
   - With 32/60 credits :coin:

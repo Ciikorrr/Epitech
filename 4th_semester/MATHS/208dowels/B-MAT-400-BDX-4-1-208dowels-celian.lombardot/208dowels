@@ -1,0 +1,109 @@
+#!/usr/bin/env python3
+# from parser_1 import get_args
+from math import exp, sqrt, pi
+from chitable import getinterval
+from parser_1 import get_args
+import sys
+
+def get_binome(n: int, k: int) -> int:
+    """Compute the binom (n, k) which is
+    the subset of k elements from a fixed set of n elements
+
+    ### Parameters
+    1. n : int
+        - size of the set
+    2. k : int
+        - size od subset
+
+    ### Returns
+    - int
+        - result of n choose k
+    """
+    res = 1
+    nk = n - k
+    for i in range(1, k + 1):
+        res = ((nk + i) * res) // i
+    return res
+
+def get_proba(values, n):
+    esperance = sum([i * values[i] for i in range(len(values))])
+    return esperance / (n * n)
+
+def getX(n: int, x: int, p: float):
+    return get_binome(n, x) * pow(p, x) * pow(1 - p, n - x) * 100
+
+def is_fused(x):
+        return not any([e[-1] < 10 for e in x])
+
+def get_min(l):
+    mi = l[0][2]
+    idx = 0
+    for i in range(len(l)):
+        if (l[i][2] < mi):
+            mi = l[i][2]
+            idx = i
+    return idx
+
+def assemble_arr(x, Tx):
+    l = [(i, i+1, x[i]) for i in range(len(x))]
+    while (not is_fused(l)):
+        idx = get_min(l)
+        mini = idx - 1
+        if (idx == 0 or idx < len(l) - 1 and l[idx + 1][-1] < l[mini][-1]):
+            mini = idx + 1
+        if (mini < idx):
+            idx , mini = mini, idx
+        val, nex = l[idx], l[mini]
+        fused = (val[0], nex[1], val[2] + nex[2])
+        l.pop(mini)
+        l[idx] = fused
+        Tx[idx] = Tx[idx] + Tx[mini]
+        Tx.pop(mini)
+    return l, [e[2] for e in l], Tx
+
+
+def get_chi2(Ox, Tx):
+    return sum([(Ox[i] - Tx[i]) ** 2 / Tx[i] for i in range(len(Ox))])
+
+def convx(obj, i, lentgh):
+    if (i == lentgh - 1):
+        return f"{obj[0]}+"
+    if (obj[1] - obj[0] > 1):
+        return f"{obj[0]}-{obj[1] - 1}"
+    return str(obj[0])
+
+def get_list_x(x):
+    return "".join([f'| {convx(x[i], i, len(x))}\t' for i in range(len(x))])
+
+def get_list_Ox(x):
+    return "".join([f'| {x[i]}\t' for i in range(len(x))])
+
+def get_list_Tx(x):
+    return "".join([f'| {x[i]:.1f}\t' for i in range(len(x))])
+
+if __name__ == "__main__":
+    args = get_args()
+    proba = get_proba(args.Oi ,100)
+    values = [getX(100, i, proba) for i in range(len(args.Oi))]
+
+    x, Ox, Tx = assemble_arr(args.Oi, values)
+    Tx[-1] = 100 - sum(Tx[:-1])
+
+    degree_freedom = len(Tx) - 2
+    chi2 = get_chi2(Ox, Tx)
+    interval = getinterval(chi2, degree_freedom)
+
+
+    print(f"   x\t{get_list_x(x)}| Total")
+    print(f"  Ox\t{get_list_Ox(Ox)}| 100")
+    print(f"  Tx\t{get_list_Tx(Tx)}| 100")
+    print(f"Distribution:\t\tB(100, {proba:.4f})")
+    print(f"Chi-squared:\t\t{chi2:.3f}")
+    print(f"Degrees of freedom:\t{degree_freedom}")
+    print(f"Fit validity:\t\t", end='')
+    if (interval[1] == 0):
+        print(f"P < {interval[0]}")
+    elif (interval[0] == 0):
+        print(f"P > {interval[1]}")
+    else:
+        print(f"{interval[1]} < P < {interval[0]}")

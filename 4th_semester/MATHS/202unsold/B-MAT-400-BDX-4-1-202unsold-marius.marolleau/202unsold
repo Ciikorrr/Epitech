@@ -1,0 +1,102 @@
+#!/usr/bin/env python3
+from parser_1 import get_args
+
+def get_proba(a, b, x, y):
+    return ((a - x)*(b - y)) / ((5*a - 150) * (5*b - 150))
+
+def get_tab(a, b):
+    """_Return the full table (with x law and Y law)_
+
+    Args:
+        a (_int_): _constant from past result_
+        b (_int_): _constant from past result_
+
+    Returns:
+        _List [List [int]]_: _table containing all the results_
+    """
+    tab = [[get_proba(a, b, x*10, y*10) for x in range(1, 6)] for y in range(1, 6)]
+    for i in range(5):
+        tab[i].append(sum(tab[i]))
+    tab.append([0,0,0,0,0, 0])
+    for i in range(6):
+        for j in range(5):
+            tab[5][i] += tab[j][i]
+    return tab
+
+def print_tab(tab):
+    """_Display the table_
+
+    Args:
+        tab (_List [List [int]]_): _full table_
+    """
+    print("\tX=10\tX=20\tX=30\tX=40\tX=50\tY law")
+    for i in range(5):
+        print(f"Y={i *10 + 10}", *[f"{e:.3f}" for e in tab[i]], sep='\t')
+    print(f"X law", *[f"{e:.3f}" for e in tab[5]], sep='\t')
+
+def get_z_law(tab):
+    """_Get the z law results_
+
+    Args:
+        tab (_List [List [int]]_): _full table
+
+    Returns:
+        _List [int]_: _z law_
+    """
+    dic = [0 for i in range(11)]
+    for y in range(5):
+        for x in range(5):
+            dic[x+1 + y+1] += tab[y][x]
+    return [dic[i] for i in range(2, 11)]
+
+def print_z_law(z_law):
+    """_Display the z law lines_
+
+    Args:
+        z_law (_List [int]_): _z_law_
+    """
+    print('z', *[str(i) for i in range(20, 110, 10)], sep='\t')
+    print("p(Z=z)\t" + '\t'.join(f"{e:.3f}" for e in z_law))
+
+def esperance(l, vals):
+    t = 0
+    for i in range(len(vals)):
+        t += l[i] * vals[i]
+    return t
+
+def variance(l, vals):
+    return esperance(l, [e*e for e in vals]) - esperance(l, vals)**2
+
+def esp_var(var, proba, values):
+    """_Display the esperance and variance_
+
+    Args:
+        var (_str_): _Name to display_
+        proba (_List [int]_): _list of probabilities_
+        values (_List [int]_): _nb of occurences per probability_
+    """
+    print(f"expected value of {var}:\t{esperance(proba, values):.1f}")
+    print(f"variance of {var}:\t\t{variance(proba, values):.1f}")
+
+
+
+if __name__ == '__main__':
+    args = get_args()
+    a=args.a
+    b=args.b
+
+    separ='-'*80
+    print(separ)
+
+    full_tab = get_tab(a, b)
+    print_tab(full_tab)
+    print(separ)
+
+    z_law = get_z_law(full_tab)
+    print_z_law(z_law)
+    print(separ)
+
+    esp_var('X', full_tab[5], [10, 20, 30, 40, 50])
+    esp_var('Y', [full_tab[i][5] for i in range(5)], [10, 20, 30, 40, 50])
+    esp_var('Z', z_law, [i for i in range(20, 110, 10)])
+    print(separ)

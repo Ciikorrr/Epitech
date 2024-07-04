@@ -1,0 +1,13 @@
+stages:
+  - build
+  - integration
+
+compile:
+  stage: build
+  tags:
+    - arch
+  image: epitechcontent/epitest-docker
+  script:
+    - cmake -S . -B build
+    - cd build
+    - make

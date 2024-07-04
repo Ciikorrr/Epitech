@@ -1,0 +1,10 @@
+build/
+.vscode/
+.idea/
+.cache/
+__pycache__/
+
+zappy_server
+zappy_gui
+zappy_ai
+*.log

@@ -1,0 +1,5 @@
+USAGE:
+  ./arcade path_to_graphical_lib
+  
+DESCRIPTION:
+  lib         path to the initial graphical library to load (./lib/arcade_lib_name.so)

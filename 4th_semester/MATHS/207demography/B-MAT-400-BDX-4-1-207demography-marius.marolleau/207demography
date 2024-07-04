@@ -1,0 +1,76 @@
+#!/usr/bin/env python3
+import datamanip
+from math import sqrt
+from parser_1 import display_result, get_args
+
+def x_bar(l, val: dict):
+    return 1 / l * sum(val.keys())
+
+def y_bar(l, val: dict):
+    return 1 / l * sum(val.values())
+
+def least_square(x: list, y: list):
+    assert len(x) == len(y)
+    x_bar = sum(x) / len(x)
+    y_bar = sum(y) / len(y)
+    xy_bar = sum([x[i] * y[i] for i in range(len(x))]) / len(x)
+    xx_bar = sum([x[i] * x[i] for i in range(len(x))]) / len(x)
+    alpha = (xy_bar - x_bar * y_bar) / (xx_bar - x_bar * x_bar)
+    beta = y_bar - alpha * x_bar
+    return alpha, beta
+
+def pop_in(alpha, beta, year):
+    return alpha * year + beta
+
+def get_rms(pop_in, x, y):
+    return sqrt(1/len(y) * sum([(y[i] - pop_in(x[i]))**2 for i in range(len(y))]))
+
+def get_values(names):
+    values = {}
+    print("Country:", end=" ")
+    for i in range (len(names)):
+        for key, val in datamanip.get_datas_for_one_country_code(names[i]).items():
+            if (key in values.keys()):
+                values[key] += val
+            else : values[key] = val
+        if i > 0:
+            print(", ", end="")
+        print(datamanip._country_code_to_country[names[i]], end = "")
+    print()
+    return values
+
+
+def get_fit1(x, y):
+    year = 2050
+    alpha, beta = least_square(x, y)
+    pop_in = lambda e : alpha * e + beta
+    return alpha, beta, get_rms(pop_in, x, y), pop_in(year)
+
+def get_fit2(x, y):
+    year = 2050
+    alpha, beta = least_square(y, x)
+    pop_in = lambda e : (e - beta) / alpha
+    return alpha, beta, get_rms(pop_in, x, y), pop_in(year)
+
+
+def get_correlation(x, y):
+    assert len(x) == len(y)
+    N = len(x)
+    x_bar = sum(x) / N
+    y_bar = sum(y) / N
+    sum1 = sum([x[i] * y[i] for i in range(N)])
+    sum2 = sum([x[i] **2 - x_bar ** 2  for i in range(N)])
+    sum3 = sum([y[i] **2 - y_bar ** 2  for i in range(N)])
+    return (sum1 / N - x_bar * y_bar) / ((sum2 / N) ** 0.5 * (sum3 / N) ** 0.5)
+
+
+def main(codes: list) -> None:
+    vals = get_values(codes)
+    x, y = list(vals.keys()), list(vals.values())
+    c = get_correlation(x, y)
+    display_result(*get_fit1(x, y), *get_fit2(x, y), c)
+
+
+if __name__ == "__main__":
+    args = get_args()
+    main(args.code)

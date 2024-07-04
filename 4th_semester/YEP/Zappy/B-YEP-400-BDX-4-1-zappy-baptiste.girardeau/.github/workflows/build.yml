@@ -1,0 +1,60 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    container: epitechcontent/epitest-docker:latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: make
+
+  coding-style:
+    name: Check coding style
+    runs-on: ubuntu-latest
+    container: ghcr.io/epitech/coding-style-checker:latest
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
+      - name: Check coding style
+        run: check.sh $(pwd) $(pwd)
+
+      - name: Report errors
+        run: |
+          if ! [ -s coding-style-reports.log ]; then
+            exit 0
+          else
+            awk -F':' '{sub(/^ /, "", $3); print "::error file="$1",line="$2",title="$3" coding style error::"$4}' coding-style-reports.log
+            exit 1
+          fi
+
+  mirror:
+    name: Push to mirror
+    runs-on: ubuntu-latest
+    environment: epitech
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [build, coding-style]
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Mirror repository
+        uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url: ${{ vars.MIRROR_URL }}
+          ssh_private_key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}

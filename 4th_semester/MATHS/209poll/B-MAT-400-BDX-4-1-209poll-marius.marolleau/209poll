@@ -1,0 +1,94 @@
+#!/bin/python3
+
+from display import display
+from parser_de_zinzin import get_args
+
+def get_binome(n: int, k: int) -> int:
+    """Compute the binom (n, k) which is
+    the subset of k elements from a fixed set of n elements
+
+    ### Parameters
+    1. n : int
+        - size of the set
+    2. k : int
+        - size od subset
+
+    ### Returns
+    - int
+        - result of n choose k
+    """
+    res = 1
+    nk = n - k
+    for i in range(1, k + 1):
+        res = ((nk + i) * res) // i
+    return res
+
+def get_gama(N: int, n: int) -> float:
+    """return the variance estimator
+
+    Args:
+        p (float): estimator
+        N (int): global group size
+        n (int): group size
+
+    Returns:
+        float: result
+    """
+    return (N - n) / (N - 1)
+
+def get_sigma2(p: float, n: int, gama: float) -> float:
+    """return the variance estimator
+
+    Args:
+        p (float): estimator
+        n (int): group size
+        gama (float): gama
+
+    Returns:
+        float: result
+    """
+    return ((p * (1 - p)) / n) * gama
+
+def interval(p: float, v: float, gama: float) -> tuple[float, float]:
+    """return the confidence interval of a given amplitude
+
+    Args:
+        p (float): estimator
+        v (float): sigma
+        gama (float): gama
+
+    Returns:
+        tuple[float, float]: confidence intervale
+    """
+    return (p - gama * (v ** 0.5)) * 100, (p + gama * (v ** 0.5)) * 100
+
+def clamp(n: float, minn: float, maxn: float):
+    """Clamp a value
+
+    Args:
+        n (float): value to clamp
+        minn (float): minimum
+        maxn (float): maximum
+
+    Returns:
+        float: clamped v between minn and maxn
+    """
+    return max(min(maxn, n), minn)
+
+def aligne(interval: list[float]):
+    assert len(interval) == 2
+    return clamp(interval[0], 0, 100), clamp(interval[1], 0, 100)
+
+def main():
+    args = get_args()
+    gama: float = get_gama(args.pSize, args.sSize)
+    sigma2: float = get_sigma2(args.p / 100, args.sSize, gama)
+    interval1 = aligne(interval(args.p / 100, sigma2, 1.96))
+    interval2 = aligne(interval(args.p / 100, sigma2, 2.58))
+    display(args, sigma2, interval1, interval2)
+
+if __name__ == "__main__":
+    try :
+        main()
+    except ZeroDivisionError:
+        exit(84)

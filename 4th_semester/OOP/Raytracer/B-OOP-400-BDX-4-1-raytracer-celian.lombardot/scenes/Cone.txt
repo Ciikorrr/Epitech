@@ -1,0 +1,30 @@
+camera:
+{
+    resolution = { width = 1920; height = 1080; };
+    position = { x = 3.0; y = 0.5; z = -1.0; };
+    rotation = { x = 90.0; y = 0.0; z = 0.0; };
+    fieldOfView = 90.0;
+};
+
+primitives:
+{
+    cones = (
+        { x = 0.0; y = 1.0; z = 0.0; r = 1.0; normal = {x = 0.0; y = 0.0; z = 3.0;}; color = { r = 255; g = 0; b = 0; }; reflection = 0.0; lightR = 1.0; },
+        { x = 0.0; y = 0.0; z = -1.0; r = 0.5; normal = {x = 0.0; y = 2.0; z = 0.0;}; color = { r = 150; g = 150; b = 150; }; reflection = 1.0; lightR = 1.0; },
+        { x = 0.0; y = 0.0; z = -2.0; r = 1.0; normal = {x = 0.0; y = 1.0; z = -1.0;}; color = { r = 0; g = 0; b = 255; }; reflection = 0.0; lightR = 1.0; },
+    );
+    planes = (
+        { origin = {x = 0.0; y = -0.5; z = 0.0; }; normal = {x = 0.0; y = 1.0; z = 0.0; }; color = { r = 150; g = 150; b = 150; }; reflection = 1.0; lightR = 1.0;},
+    );
+};
+
+lights:
+{
+    ambient = 0.2;
+    diffuse = 0.6;
+    directional = (
+        { x = 0.0; y = -1.0; z = 0.0; intensity = 1.0; color = { r = 255; g = 255; b = 255; };},
+    );
+    point = (
+    )
+};
