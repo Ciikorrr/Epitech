@@ -1,0 +1,12 @@
+# Local configuration
+.idea
+.vscode
+.cache
+CMakeLists.txt
+cmake-*
+compile_commands.json
+
+# Build output
+build
+MyGKrellm
+MyGKrellm_debug

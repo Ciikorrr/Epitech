@@ -1,0 +1,6 @@
+---
+Checks: 'clang-analyzer-*,bugprone-*,modernize-*,performance-*,
+        -bugprone-easily-swappable-parameters,
+        -modernize-use-trailing-return-type'
+FormatStyle: file
+...
